@@ -94,3 +94,11 @@ table {
 td {
     padding: 5px 20px;
 }
+
+.logs__item__name {
+    text-align: start;
+}
+
+.logs__item__date {
+    text-align: end;
+}
