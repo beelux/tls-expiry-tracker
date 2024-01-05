@@ -38,7 +38,6 @@ function generateTable(data) {
 }
 
 function setRecentDate(data) {
-    console.log(data);
     let mostRecentDate = 0;
     try {
         mostRecentDate = data.reduce((maxNum, expiredEntry) => {
@@ -52,9 +51,18 @@ function setRecentDate(data) {
     document.getElementById("time__tls").innerHTML = mostRecentDate;
 }
 
-fetch("data.json")
+function refreshData() {
+    console.log("Refreshing TLS expired data...");
+    fetch("data.json")
     .then(res => res.json())
     .then(data => {
         generateTable(data.incidents);
         setRecentDate(data.incidents);
     });
+}
+
+window.onload = function () {
+    setInterval(refreshData, 60000);
+}
+
+refreshData();
