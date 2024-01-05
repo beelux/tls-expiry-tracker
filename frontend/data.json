@@ -2,16 +2,15 @@
     "incidents": [
       {
         "domain": "c3l.lu",
-        "date": 3
+        "date": 1704157217
       },
       {
         "domain": "social.c3l.lu",
-        "date": 5
+        "date": 1704070817
       },
       {
         "domain": "mail.c3l.lu",
-        "date": 10
+        "date": 1703552417
       }
     ]
-  }
-  
+}

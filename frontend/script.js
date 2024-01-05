@@ -1,4 +1,11 @@
+function getDateDifference(datePosix) {
+    const difference = Date.now() - (datePosix * 1000);
+    const days = Math.floor(difference / (1000 * 3600 * 24));
+    return days.toString();
+}
+
 function generateTable(data) {
+    try {
     const tableBody = document.createElement("tbody");
     tableBody.classList.add("logs__tbody");
 
@@ -14,7 +21,8 @@ function generateTable(data) {
 
         const date = document.createElement("td");
         date.classList.add("logs__item__date");
-        const dateText = document.createTextNode(data[i].date + " days ago");
+        const dateData = getDateDifference(data[i].date);
+        const dateText = document.createTextNode(dateData + " days ago");
         date.appendChild(dateText);
         row.appendChild(date);
 
@@ -25,22 +33,27 @@ function generateTable(data) {
     table.classList.add("logs__table");
     table.appendChild(tableBody);
     document.getElementById("logs").appendChild(table);
+    } catch (e) {}
 }
 
-function setLowestDate(data) {
+function setRecentDate(data) {
     console.log(data);
-    const lowestDate = data.reduce((minNum, expiredEntry) => {
-        return Math.min(expiredEntry.date, minNum)
-    }, Infinity);
+    let mostRecentDate = 0;
+    try {
+        mostRecentDate = data.reduce((maxNum, expiredEntry) => {
+            return Math.max(expiredEntry.date, maxNum)
+        }, 0);
+    } catch (e) {}
 
-    console.log(lowestDate);
+    if(mostRecentDate === 0) mostRecentDate = "∞";
+    else mostRecentDate = getDateDifference(mostRecentDate);
 
-    document.getElementById("time__tls").innerHTML = lowestDate;
+    document.getElementById("time__tls").innerHTML = mostRecentDate;
 }
 
 fetch("data.json")
     .then(res => res.json())
     .then(data => {
         generateTable(data.incidents);
-        setLowestDate(data.incidents);
+        setRecentDate(data.incidents);
     });
