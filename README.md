@@ -19,6 +19,4 @@ Find out by rolling out this tool with the domains and services!
 ### Frontend
 
 - Javascript
-  - fetch generated JSON from "backend" (web server)
-    - every X seconds
-  - re-render the counter every second
+  - re-fetch JSON from backend regularly (every 10 seconds to 1 minute), then update the page
