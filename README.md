@@ -4,7 +4,7 @@ How often does your infrastructure break because you forgot to automate TLS rene
 
 Find out by rolling out this tool with the domains and services!
 
-## Plans
+## Plans (TODO)
 
 ### Backend
 
@@ -15,8 +15,3 @@ Find out by rolling out this tool with the domains and services!
   - expiry status *per* domain
   - log of outages
 - cronjob at the start (every 1-5 minutes)
-
-### Frontend
-
-- Javascript
-  - re-fetch JSON from backend regularly (every 10 seconds to 1 minute), then update the page
