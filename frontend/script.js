@@ -31,8 +31,9 @@ function generateTable(data) {
 
     const table = document.createElement("table");
     table.classList.add("logs__table");
+    table.id = "logs__table";
     table.appendChild(tableBody);
-    document.getElementById("logs").appendChild(table);
+    document.getElementById("logs__table").replaceWith(table);
     } catch (e) {}
 }
 
