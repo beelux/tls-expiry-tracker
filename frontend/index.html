@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>TLS Outage Tracker</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 	</head>
 	<body>
@@ -12,24 +13,20 @@
 			<p class="countup__item countup__text">since last outage caused by TLS expiry</p>
     </div>
 
-    <div class="logs">
-        <p class="logs__title">Last incidents</h2>
+    <div class="logs" id="logs">
+        <p class="logs__title">Last incidents</p>
 
-        <table>
-            <tbody>
-                <tr>
+        <table class="logs__table">
+            <tbody class="logs__tbody">
+                <tr class="logs__trow">
                     <td class="logs__item__name">c3l.lu</td>
                     <td class="logs__item__date">3 days ago</td>
                 </tr>
-            </tbody>
-            <tbody>
-                <tr>
+                <tr class="logs__trow">
                     <td class="logs__item__name">social.c3l.lu</td>
                     <td class="logs__item__date">5 days ago</td>
                 </tr>
-            </tbody>
-            <tbody>
-                <tr>
+                <tr class="logs__trow">
                     <td class="logs__item__name">mail.c3l.lu</td>
                     <td class="logs__item__date">10 days ago</td>
                 </tr>

@@ -1,0 +1,17 @@
+{
+    "incidents": [
+      {
+        "domain": "c3l.lu",
+        "date": 3
+      },
+      {
+        "domain": "social.c3l.lu",
+        "date": 5
+      },
+      {
+        "domain": "mail.c3l.lu",
+        "date": 10
+      }
+    ]
+  }
+  
