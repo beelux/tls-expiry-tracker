@@ -54,8 +54,7 @@ body {
 
 .logs {
     margin:auto;
-    max-width: 50vw;
-    min-width: 50vw;
+    width: max-content;
 
     margin-top: 3vh;
     border-radius: 0.1rem;
