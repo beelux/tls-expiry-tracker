@@ -18,12 +18,6 @@ Find out by rolling out this tool with the domains and services!
 
 ### Frontend
 
-- Basic HTML
-  - simple CSS
-  - title at the top "Days since last outage caused by TLS expiry:"
-  - big centered number in the middle for time since last outage
-  - list of domains and their expiry status underneath
-  - log of outages underneath
 - Javascript
   - fetch generated JSON from "backend" (web server)
     - every X seconds
