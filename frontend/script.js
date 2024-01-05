@@ -27,4 +27,20 @@ function generateTable(data) {
     document.getElementById("logs").appendChild(table);
 }
 
-fetch("data.json").then(res => res.json()).then(data => generateTable(data.incidents));
+function setLowestDate(data) {
+    console.log(data);
+    const lowestDate = data.reduce((minNum, expiredEntry) => {
+        return Math.min(expiredEntry.date, minNum)
+    }, Infinity);
+
+    console.log(lowestDate);
+
+    document.getElementById("time__tls").innerHTML = lowestDate;
+}
+
+fetch("data.json")
+    .then(res => res.json())
+    .then(data => {
+        generateTable(data.incidents);
+        setLowestDate(data.incidents);
+    });
