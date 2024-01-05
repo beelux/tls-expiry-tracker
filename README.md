@@ -4,6 +4,15 @@ How often does your infrastructure break because you forgot to automate TLS rene
 
 Find out by rolling out this tool with the domains and services!
 
+## Guide: how to set up
+
+To set up the backend:
+
+- `cd backend`
+- `python -m venv venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
+
 ## Plans (TODO)
 
 ### Backend

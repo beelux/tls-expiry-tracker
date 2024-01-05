@@ -1,0 +1,37 @@
+{
+    "domains": {
+        "web": [
+            "expired.badssl.com",
+            "wrong.host.badssl.com",
+            "self-signed.badssl.com",
+            "untrusted-root.badssl.com",
+            "revoked.badssl.com",
+            "pinning-test.badssl.com",
+            "c3l.lu",
+            "www.c3l.lu",
+            "wiki.c3l.lu",
+            "social.c3l.lu",
+            "xmpp.c3l.lu",
+            "statutes.c3l.lu",
+            "spaceapi.c3l.lu",
+            "membership.c3l.lu",
+            "cloud.c3l.lu",
+            "fichiercentral.c3l.lu",
+            "tickets.c3l.lu",
+            "projects.c3l.lu",
+            "pad.c3l.lu",
+            "matrix.c3l.lu",
+            "payment.c3l.lu",
+            "tails.c3l.lu",
+            "rt.c3l.lu",
+            "devuan.c3l.lu",
+            "cpan.c3l.lu",
+            "lists.c3l.lu",
+            "freifunk.lu",
+            "www.freifunk.lu",
+            "api.freifunk.lu",
+            "firmware.freifunk.lu",
+            "map.freifunk.lu"
+        ]
+    }
+}
