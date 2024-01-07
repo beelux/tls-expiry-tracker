@@ -32,6 +32,12 @@
             "api.freifunk.lu",
             "firmware.freifunk.lu",
             "map.freifunk.lu"
+        ],
+        "smtp": [
+            {"host": "smtp.c3l.lu", "port": 587}
+        ],
+        "imap": [
+            {"host": "imap.c3l.lu", "port": 143}
         ]
     }
 }
