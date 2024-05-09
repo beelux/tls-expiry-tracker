@@ -1,2 +1,2 @@
 rich==13.*
-cryptography==41.*
+cryptography==42.*
