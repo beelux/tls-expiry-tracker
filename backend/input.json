@@ -6,6 +6,7 @@
             "self-signed.badssl.com",
             "untrusted-root.badssl.com",
             "revoked.badssl.com",
+            "rsa-revoked.ca-2.test.pkiworks.com",
             "pinning-test.badssl.com",
             "c3l.lu",
             "www.c3l.lu",

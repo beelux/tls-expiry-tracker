@@ -37,6 +37,9 @@ class Verificator:
                 expiry = handler.connect(False)
                 return TLSDetails(domain_name=domain, expires_in_days=expiry)
             elif e.verify_code == REVOKED:
+                # This never happens, as we do not have any CRLs or OCSP set up :(
+                # It's a massive pain and I'm not sure it's worth the considerable extra code
+                # Maybe look into MetLife/OCSPChecker but idk
                 return TLSDetails(domain_name=domain, error_message="was revoked.")
             elif e.verify_code == SELF_SIGNED:
                 return TLSDetails(domain_name=domain, error_message="is self-signed.")
