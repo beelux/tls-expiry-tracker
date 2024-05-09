@@ -19,7 +19,7 @@ class TLSDetails:
         self.expires_in_days = expires_in_days
         self.error_message = error_message
         self.connection_error = connection_error
-    
+
     def print(self, console: Console):
         if self.connection_error:
             console.log("[orange bold underline]" + self.domain_name, self.error_message, style="orange")

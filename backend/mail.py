@@ -13,7 +13,7 @@ class MailHandler(ABC):
         self.host = host
         self.port = port
         self.context = context
-    
+
     def connect(self, verification: bool) -> int:
         connection = self.protocol_init(self.host, self.port)
         if verification:
@@ -33,7 +33,7 @@ class MailHandler(ABC):
     @abstractmethod
     def protocol_starttls_args(self):
         raise NotImplementedError()
-    
+
     @staticmethod
     def create_handler(protocol: str):
         if protocol == "smtp":
