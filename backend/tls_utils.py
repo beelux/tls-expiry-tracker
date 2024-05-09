@@ -3,18 +3,27 @@ from rich.console import Console
 import datetime
 import math
 
+EXPIRED = 10
+REVOKED = 23
+SELF_SIGNED = 18
+ROOT_NOT_TRUSTED = 19
+
 class TLSDetails:
     domain_name = None
     expires_in_days = None
     error_message = None
+    connection_error = False
 
-    def __init__(self, domain_name : str = None, expires_in_days : str = None, error_message : str = None):
+    def __init__(self, domain_name : str = None, expires_in_days : str = None, error_message : str = None, connection_error : bool = False):
         self.domain_name = domain_name
         self.expires_in_days = expires_in_days
         self.error_message = error_message
+        self.connection_error = connection_error
     
     def print(self, console: Console):
-        if self.error_message != None:
+        if self.connection_error:
+            console.log("[orange bold underline]" + self.domain_name, self.error_message, style="orange")
+        elif self.error_message != None:
             console.log("[red bold underline]" + self.domain_name, self.error_message, style="red")
         elif self.expires_in_days < 0:
             console.log("[red bold underline]" + self.domain_name, "expired", abs(self.expires_in_days), "days ago.", style="red")

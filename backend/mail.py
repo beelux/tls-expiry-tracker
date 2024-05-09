@@ -14,7 +14,7 @@ class MailHandler(ABC):
         self.port = port
         self.context = context
     
-    def connect(self, verification: bool) -> tuple[bool, int]:
+    def connect(self, verification: bool) -> int:
         connection = self.protocol_init(self.host, self.port)
         if verification:
             connection.starttls(**self.protocol_starttls_args())
@@ -22,7 +22,7 @@ class MailHandler(ABC):
             connection.starttls()
         cert = connection.sock.getpeercert()
         self.protocol_close(connection)
-        return tls_utils.get_validity_days(cert)
+        return tls_utils.get_validity_days(cert)[1]
 
     @abstractmethod
     def protocol_init(self, host, port):
@@ -66,11 +66,11 @@ class MailVerificator:
     def connect(self, domain: str, port: int, protocol: str) -> TLSDetails:
         mail = MailHandler.create_handler(protocol)(domain, port, self.context)
         try:
-            expiry = mail.connect(True)[1]
+            expiry = mail.connect(True)
             return TLSDetails(domain_name=domain, expires_in_days=expiry)
         except ssl.SSLCertVerificationError as e:
-            if (e.verify_code == 10):
-                expiry = mail.connect(False)[1]
+            if (e.verify_code == tls_utils.EXPIRED_VERIFY_CODE):
+                expiry = mail.connect(False)
                 return TLSDetails(domain_name=domain, expires_in_days=expiry)
             else:
                 error = "failed verification:", e.verify_message + "."
