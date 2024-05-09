@@ -30,12 +30,12 @@ class Verificator:
     def connect(self, domain: str, port: int, protocol: str) -> TLSDetails:
         handler = GenericHandler.create_handler(protocol)(domain, port, self.context)
         try:
-            expiry = handler.connect(True)
-            return TLSDetails(domain_name=domain, expires_in_days=expiry)
+            notAfter = handler.connect(True)
+            return TLSDetails(domain_name=domain, expiry_timestamp_utc=notAfter)
         except ssl.SSLCertVerificationError as e:
             if e.verify_code == EXPIRED:
-                expiry = handler.connect(False)
-                return TLSDetails(domain_name=domain, expires_in_days=expiry)
+                notAfter = handler.connect(False)
+                return TLSDetails(domain_name=domain, expiry_timestamp_utc=notAfter)
             elif e.verify_code == REVOKED:
                 # This never happens, as we do not have any CRLs or OCSP set up :(
                 # It's a massive pain and I'm not sure it's worth the considerable extra code

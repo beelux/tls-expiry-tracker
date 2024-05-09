@@ -12,9 +12,9 @@ class SSLHandler(GenericHandler):
             with self.context.wrap_socket(socket.socket(), server_hostname=self.host) as s:
                 s.connect((self.host, self.port))
                 cert = s.getpeercert()
-                return tls_utils.check_cert_validity(cert)[1]
+                return tls_utils.get_cert_expiry_timestamp(cert)
         else:
             pem_cert = ssl.get_server_certificate((self.host, self.port), timeout=5)
             cert = x509.load_pem_x509_certificate(pem_cert.encode())
             not_after = cert.not_valid_after_utc.timestamp()
-            return tls_utils.compare_expiry_timestamps(not_after)[1]
+            return not_after

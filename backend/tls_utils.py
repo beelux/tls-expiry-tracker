@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from rich.console import Console
 import datetime
-import math
 
 EXPIRED = 10
 REVOKED = 23
@@ -10,51 +9,97 @@ ROOT_NOT_TRUSTED = 19
 
 class TLSDetails:
     domain_name = None
-    expires_in_days = None
+    expiry_timestamp_utc = None
     error_message = None
     connection_error = False
 
-    def __init__(self, domain_name : str = None, expires_in_days : str = None, error_message : str = None, connection_error : bool = False):
+    def __init__(self, domain_name : str = None, expiry_timestamp_utc : int = None, error_message : str = None, connection_error : bool = False):
         self.domain_name = domain_name
-        self.expires_in_days = expires_in_days
+        self.expiry_timestamp_utc = expiry_timestamp_utc
         self.error_message = error_message
         self.connection_error = connection_error
 
+    # Green - Valid
+    # Orange - Non-TLS error
+    # Red - TLS error
     def print(self, console: Console):
         if self.connection_error:
             console.log("[bold underline]" + self.domain_name, self.error_message, style="orange")
         elif self.error_message != None:
             console.log("[bold underline]" + self.domain_name, self.error_message, style="red")
-        elif self.expires_in_days < 0:
-            console.log("[bold underline]" + self.domain_name, "expired", abs(self.expires_in_days), "days ago.", style="red")
         else:
-            console.log("[bold underline]" + self.domain_name, "expires in", self.expires_in_days, "days", style="green")
+            msg, future = self.relative_time_comparison()
+            if not future:
+                console.log("[bold underline]" + self.domain_name, "expired", msg + ".", style="red")
+            else:
+                console.log("[bold underline]" + self.domain_name, "expires", msg + ".", style="green")
 
-def compare_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[bool, int]:
-    seconds_left = expiry_timestamp - now_timestamp
-    valid = seconds_left >= 0
-    # We use floor(), which, when negative, will round towards -1
-    if not valid:
-        seconds_left = -seconds_left
-    days_left = math.floor(seconds_left / 86400)
-    # We need to restore the inversion
-    if not valid:
-        days_left = -days_left
-    return (valid, days_left)
+    def is_valid(self) -> bool:
+        if self.connection_error:
+            return None
+        return (self.error_message is None) and (not self.is_expired())
 
-# Returns if the cert is valid, and the number of days left until expiry (negative if expired)
-def check_cert_validity(cert) -> tuple[bool, int]:
-    # Get expiry date
+    def is_expired(self) -> bool:
+        if self.expiry_timestamp_utc is None:
+            return True
+        now_timestamp = datetime.datetime.now(datetime.UTC).timestamp()
+        # notAfter, so it includes the second itself
+        return now_timestamp >= self.expiry_timestamp_utc
+
+    # Returns a human-readable relative string, and if the date is future (true) or past (false)
+    def relative_time_comparison(self, now = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[str, bool]:
+        if self.expiry_timestamp_utc is None:
+            return ""
+
+        diff = round(self.expiry_timestamp_utc) - round(now)
+        future = diff > 0
+
+        seconds_diff = int(abs(diff))
+        minutes_diff = seconds_diff // 60
+        hours_diff = minutes_diff // 60
+        days_diff = hours_diff // 24
+        months_diff = days_diff // 30
+
+        msg = ""
+        if months_diff > 0:
+            days_diff = days_diff % 30
+            msg += str(months_diff) + " month" + ("s" if months_diff > 1 else "")
+            if future and months_diff < 3 and days_diff > 0:
+                msg += " and " + str(days_diff) + " day" + ("s" if days_diff > 1 else "")
+        elif days_diff > 0:
+            msg += str(days_diff) + " day" + ("s" if days_diff > 1 else "")
+        elif hours_diff > 0:
+            msg += str(hours_diff) + " hour" + ("s" if hours_diff > 1 else "")
+        elif minutes_diff > 0:
+            msg += str(minutes_diff) + " minute" + ("s" if minutes_diff > 1 else "")
+        elif seconds_diff > 0:
+            msg += str(seconds_diff) + " second" + ("s" if seconds_diff > 1 else "")
+        else:
+            msg = "now"
+
+        if future:
+            if seconds_diff > 0:
+                msg = "in " + msg
+        else:
+            if seconds_diff > 0:
+                msg = msg + " ago"
+
+        return (msg, future)
+
+def get_cert_expiry_timestamp(cert) -> int:
     notAfter = cert['notAfter']
-    notAfter_date = datetime.datetime.strptime(notAfter, '%b %d %H:%M:%S %Y %Z')
-
-    # datetime to UNIX time
-    notAfter_timestamp = notAfter_date.timestamp()
-    expiry = compare_expiry_timestamps(notAfter_timestamp)
-    return (expiry[0], expiry[1])
+    notAfter_date = datetime.datetime.strptime(notAfter, '%b %d %H:%M:%S %Y %Z').astimezone(datetime.UTC)
+    return notAfter_date.timestamp()
 
 # Test expiry checking (timestamps)
 if __name__ == "__main__":
     console = Console()
-    console.log("Time from rn (some time ago):", compare_expiry_timestamps(1715277129))
-    console.log("Time from rn (in some time):", compare_expiry_timestamps(1715279129))
+
+    test = TLSDetails(domain_name="now.example.org", expiry_timestamp_utc=datetime.datetime.now(datetime.UTC).timestamp())
+    console.log("Now: ", test.relative_time_comparison())
+
+    test = TLSDetails(domain_name="past.example.org", expiry_timestamp_utc=datetime.datetime.now(datetime.UTC).timestamp() - 1)
+    console.log("Past: ", test.relative_time_comparison())
+
+    test = TLSDetails(domain_name="future.example.org", expiry_timestamp_utc=datetime.datetime.now(datetime.UTC).timestamp() + 1)
+    console.log("Future: ", test.relative_time_comparison())

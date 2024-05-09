@@ -17,7 +17,7 @@ class MailHandler(GenericHandler):
             connection.starttls()
         cert = connection.sock.getpeercert()
         self.protocol_close(connection)
-        return tls_utils.check_cert_validity(cert)[1]
+        return tls_utils.get_cert_expiry_timestamp(cert)
 
     @abstractmethod
     def protocol_init(self, host, port):
