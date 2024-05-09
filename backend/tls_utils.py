@@ -30,7 +30,7 @@ class TLSDetails:
         else:
             console.log("[green bold underline]" + self.domain_name, "expires in", self.expires_in_days, "days", style="green")
 
-def get_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now().timestamp()) -> tuple[bool, int]:
+def get_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[bool, int]:
     seconds_left = expiry_timestamp - now_timestamp
     days_left = math.floor(seconds_left / 86400)
     return (seconds_left >= 0, days_left)

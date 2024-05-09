@@ -22,7 +22,7 @@ class SSLHandler:
         else:
             pem_cert = ssl.get_server_certificate((self.host, self.port), timeout=5)
             cert = x509.load_pem_x509_certificate(pem_cert.encode())
-            not_after = cert.not_valid_after.timestamp()
+            not_after = cert.not_valid_after_utc.timestamp()
             return tls_utils.get_expiry_timestamps(not_after)[1]
 
 class SSLVerificator:
