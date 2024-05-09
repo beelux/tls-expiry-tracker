@@ -3,9 +3,7 @@ import json
 import ssl
 import os
 from rich.console import Console
-
-from web import SSLVerificator
-from mail import MailVerificator
+from generic_handler import Verificator
 
 if __name__ == "__main__":
     console = Console()
@@ -19,16 +17,15 @@ if __name__ == "__main__":
 
     console.log("[white]Checking web domains...")
 
-    ssl = SSLVerificator(context)
+    v = Verificator(context)
     for web_domain in input["domains"]["web"]:
-        result = ssl.connect(web_domain, 443)
+        result = v.connect(web_domain, 443, "ssl")
         result.print(console)
 
-    mail = MailVerificator(context)
     for smtp_entry in input["domains"]["smtp"]:
-        result = mail.connect(smtp_entry["host"], smtp_entry["port"], "smtp")
+        result = v.connect(smtp_entry["host"], smtp_entry["port"], "smtp")
         result.print(console)
 
     for imap_entry in input["domains"]["imap"]:
-        result = mail.connect(imap_entry["host"], imap_entry["port"], "imap")
+        result = v.connect(imap_entry["host"], imap_entry["port"], "imap")
         result.print(console)

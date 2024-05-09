@@ -30,17 +30,31 @@ class TLSDetails:
         else:
             console.log("[green bold underline]" + self.domain_name, "expires in", self.expires_in_days, "days", style="green")
 
-def get_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[bool, int]:
+def compare_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[bool, int]:
     seconds_left = expiry_timestamp - now_timestamp
+    valid = seconds_left >= 0
+    # We use floor(), which, when negative, will round towards -1
+    if not valid:
+        seconds_left = -seconds_left
     days_left = math.floor(seconds_left / 86400)
-    return (seconds_left >= 0, days_left)
+    # We need to restore the inversion
+    if not valid:
+        days_left = -days_left
+    return (valid, days_left)
 
-def get_validity_days(cert) -> tuple[bool, int]:
+# Returns if the cert is valid, and the number of days left until expiry (negative if expired)
+def check_cert_validity(cert) -> tuple[bool, int]:
     # Get expiry date
     notAfter = cert['notAfter']
     notAfter_date = datetime.datetime.strptime(notAfter, '%b %d %H:%M:%S %Y %Z')
 
     # datetime to UNIX time
     notAfter_timestamp = notAfter_date.timestamp()
-    expiry = get_expiry_timestamps(notAfter_timestamp)
-    return (expiry[0], abs(expiry[1]))
+    expiry = compare_expiry_timestamps(notAfter_timestamp)
+    return (expiry[0], expiry[1])
+
+# Test expiry checking (timestamps)
+if __name__ == "__main__":
+    console = Console()
+    console.log("Time from rn (some time ago):", compare_expiry_timestamps(1715277129))
+    console.log("Time from rn (in some time):", compare_expiry_timestamps(1715279129))
