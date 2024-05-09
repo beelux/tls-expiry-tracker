@@ -7,7 +7,7 @@ from rich.console import Console
 from cryptography import x509
 
 import web
-from mail import *
+from mail import MailVerificator
 import tls_utils
 
 if __name__ == "__main__":
