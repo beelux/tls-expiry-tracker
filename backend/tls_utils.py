@@ -22,13 +22,13 @@ class TLSDetails:
 
     def print(self, console: Console):
         if self.connection_error:
-            console.log("[orange bold underline]" + self.domain_name, self.error_message, style="orange")
+            console.log("[bold underline]" + self.domain_name, self.error_message, style="orange")
         elif self.error_message != None:
-            console.log("[red bold underline]" + self.domain_name, self.error_message, style="red")
+            console.log("[bold underline]" + self.domain_name, self.error_message, style="red")
         elif self.expires_in_days < 0:
-            console.log("[red bold underline]" + self.domain_name, "expired", abs(self.expires_in_days), "days ago.", style="red")
+            console.log("[bold underline]" + self.domain_name, "expired", abs(self.expires_in_days), "days ago.", style="red")
         else:
-            console.log("[green bold underline]" + self.domain_name, "expires in", self.expires_in_days, "days", style="green")
+            console.log("[bold underline]" + self.domain_name, "expires in", self.expires_in_days, "days", style="green")
 
 def compare_expiry_timestamps(expiry_timestamp: int, now_timestamp: int = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[bool, int]:
     seconds_left = expiry_timestamp - now_timestamp

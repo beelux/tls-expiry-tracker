@@ -46,8 +46,8 @@ class Verificator:
             elif e.verify_code == ROOT_NOT_TRUSTED:
                 return TLSDetails(domain_name=domain, error_message="invalid: root not trusted.")
             else:
-                return TLSDetails(domain_name=domain, error_message="failed verification: " + e.verify_message + ".")
+                return TLSDetails(domain_name=domain, error_message="failed verification: " + e.verify_message)
         except ssl.SSLError as e:
-            return TLSDetails(domain_name=domain, error_message="could not establish a secure connection: " + e.reason + ".")
+            return TLSDetails(domain_name=domain, error_message="could not establish a secure connection: " + e.reason)
         except Exception as e:
-            return TLSDetails(domain_name=domain, error_message="could not connect: " + str(e) + ".")
+            return TLSDetails(domain_name=domain, error_message="could not connect: " + str(e))
