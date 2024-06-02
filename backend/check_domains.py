@@ -18,14 +18,22 @@ if __name__ == "__main__":
     console.log("[white]Checking web domains...")
 
     v = Verificator(context)
-    for web_domain in input["domains"]["web"]:
-        result = v.connect(web_domain, 443, "ssl")
+    for https_entry in input["domains"]["https"]:
+        # HTTPS (TLS) w/ 443
+        result = v.connect(https_entry, 443, "ssl")
+        result.print(console)
+
+    for tls_entry in input["domains"]["tls"]:
+        # TLS w/ custom port
+        result = v.connect(tls_entry["host"], tls_entry["port"], "ssl")
         result.print(console)
 
     for smtp_entry in input["domains"]["smtp"]:
+        # SMTP w/ STARTTLS
         result = v.connect(smtp_entry["host"], smtp_entry["port"], "smtp")
         result.print(console)
 
     for imap_entry in input["domains"]["imap"]:
+        # IMAP w/ STARTTLS
         result = v.connect(imap_entry["host"], imap_entry["port"], "imap")
         result.print(console)

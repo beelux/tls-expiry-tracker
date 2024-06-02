@@ -14,13 +14,13 @@ class GenericHandler(ABC):
 
     @staticmethod
     def create_handler(protocol: str):
-        import web, mail
+        import sslh, mail
         if protocol == "smtp":
             return mail.SMTPHandler
         elif protocol == "imap":
             return mail.IMAPHandler
         elif protocol == "ssl" or protocol == "tls" or protocol == "https":
-            return web.SSLHandler
+            return sslh.SSLHandler
         else:
             raise ValueError("Invalid protocol")
 

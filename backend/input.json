@@ -1,6 +1,6 @@
 {
     "domains": {
-        "web": [
+        "https": [
             "expired.badssl.com",
             "wrong.host.badssl.com",
             "self-signed.badssl.com",
@@ -33,6 +33,9 @@
             "api.freifunk.lu",
             "firmware.freifunk.lu",
             "map.freifunk.lu"
+        ],
+        "tls" : [
+            {"host": "example.org", "port": 443}
         ],
         "smtp": [
             {"host": "smtp.c3l.lu", "port": 587}
