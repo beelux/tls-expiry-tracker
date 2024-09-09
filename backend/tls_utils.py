@@ -12,12 +12,14 @@ class TLSDetails:
     expiry_timestamp_utc = None
     error_message = None
     connection_error = False
+    testing_timestamp_utc = None
 
-    def __init__(self, domain_name : str = None, expiry_timestamp_utc : int = None, error_message : str = None, connection_error : bool = False):
+    def __init__(self, domain_name : str = None, expiry_timestamp_utc : int = None, error_message : str = None, connection_error : bool = False, testing_timestamp_utc = datetime.datetime.now(datetime.UTC).timestamp()):
         self.domain_name = domain_name
         self.expiry_timestamp_utc = expiry_timestamp_utc
         self.error_message = error_message
         self.connection_error = connection_error
+        self.testing_timestamp_utc = testing_timestamp_utc
 
     # Green - Valid
     # Orange - Non-TLS error
@@ -42,14 +44,15 @@ class TLSDetails:
     def is_expired(self) -> bool:
         if self.expiry_timestamp_utc is None:
             return True
-        now_timestamp = datetime.datetime.now(datetime.UTC).timestamp()
         # notAfter, so it includes the second itself
-        return now_timestamp >= self.expiry_timestamp_utc
+        return self.testing_timestamp_utc >= self.expiry_timestamp_utc
 
     # Returns a human-readable relative string, and if the date is future (true) or past (false)
-    def relative_time_comparison(self, now = datetime.datetime.now(datetime.UTC).timestamp()) -> tuple[str, bool]:
+    def relative_time_comparison(self, now = None) -> tuple[str, bool]:
         if self.expiry_timestamp_utc is None:
             return ""
+        if now is None:
+            now = self.testing_timestamp_utc
 
         diff = round(self.expiry_timestamp_utc) - round(now)
         future = diff > 0
