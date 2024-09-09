@@ -86,6 +86,13 @@ class TLSDetails:
 
         return (msg, future)
 
+    def to_json(self):
+        return self.__dict__
+
+    @classmethod
+    def from_json(cls, json_data):
+        return cls(**json_data)
+
 def get_cert_expiry_timestamp(cert) -> int:
     notAfter = cert['notAfter']
     notAfter_date = datetime.datetime.strptime(notAfter, '%b %d %H:%M:%S %Y %Z').astimezone(datetime.UTC)
