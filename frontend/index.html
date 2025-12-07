@@ -8,14 +8,47 @@
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 	</head>
 	<body>
-    <div class="countup">
-			<p class="countup__item countup__tls"><span id="time__tls">?</span> days</p>
-			<p class="countup__item countup__text">since last outage caused by TLS expiry</p>
+    <div class="main_counter">
+			<p class="countup__item countup__tls"><span id="time__tls">0</span> Days</p>
+			<p class="countup__item countup__text">since last TLS outage</p>
     </div>
 
-    <div class="logs" id="logs">
-        <p class="logs__title">Last incidents</p>
-        <table id="logs__table"></table>
-    </div>
+	<div class="main_incidents">
+        <p class="recent_incidents_text">Last incidents</p>
+
+		<div class="incidents_container">
+			<div class="incident broken">
+				<h1>example.org</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">Current</p>
+			</div>
+
+			<div class="incident">
+				<h1>example.com</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">2 days ago</p>
+			</div>
+			<div class="incident">
+				<h1>example.net</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">2 days ago</p>
+			</div>
+			<div class="incident">
+				<h1>example.edu</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">2 days ago</p>
+			</div>
+			<div class="incident">
+				<h1>example.org</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">2 days ago</p>
+			</div>
+			<div class="incident">
+				<h1>example.com</h1>
+				<p>TLS certificate expired<p>
+				<p class="incident_time">2 days ago</p>
+			</div>
+		</div>
+	</div>
 	</body>
 </html>
