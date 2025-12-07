@@ -13,8 +13,9 @@ a {
 /* General */
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 body {
-	background-color: #393939;
-    background-color: #4D5745;
+    background-color: #393939; /* no clue, original bad idea */
+    background-color: #4D5745; /* green */
+    background-color: #292929; /* dark gray */
 	color: #d2d2d2;
 
     font-family: "Helvetica", "Arial", sans-serif;
@@ -83,10 +84,11 @@ body {
 .incident {
     margin: 5px;
     padding: 7px;
-    /*text-align: center;*/
-    background-color: #454545;
-    background-color: #3F4637;
-    border: #202020 solid 2px;
+    background-color: #454545; /* no clue, original bad idea */
+    background-color: #3F4637; /* green */
+    background-color: #393939; /* dark gray */
+    border: #202020 solid 2px; /* green */
+    border: #5f5f5f solid 2px; /* dark gray */
     border-radius: 10px;
     min-width: 23%;
     flex-grow:0;
