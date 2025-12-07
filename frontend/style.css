@@ -1,27 +1,38 @@
 /* Defaults */
 * {
-	font: inherit;
-	padding: 0px;
-	margin: 0px;
+    font: inherit;
+    padding: 0px;
+    margin: 0px;
 }
 
 a {
-	text-decoration: none;
-	color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* General */
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+
+@font-face {
+    font-family:Departure Mono;
+    src:url(assets/DepartureMono-Regular.woff2) format("woff2"),
+    url(assets/DepartureMono-Regular.woff) format("woff"),
+    url(assets/DepartureMono-Regular.otf) format("opentype");
+    font-feature-settings:"locl";
+}
+
 body {
     background-color: #393939; /* no clue, original bad idea */
     background-color: #4D5745; /* green */
     background-color: #292929; /* dark gray */
-	color: #d2d2d2;
+    color: #d2d2d2;
 
-    font-family: "Helvetica", "Arial", sans-serif;
+    /*font-family: "Helvetica", "Arial", sans-serif;*/
     font-size: 20px;
 
     font-family: "DM Mono", monospace;
+    /*font-family: Departure Mono, sans-serif;*/
     font-weight: 400;
     font-style: normal;
 }
@@ -32,29 +43,29 @@ body {
 
 /* Links (block) on home page*/
 .main_counter {
-	font-size: 48px;
-	line-height: 38px;
+    font-size: 48px;
+    /*line-height: 40px;*/
     text-align: center;
 
-	margin-top: 7vh;
+    margin-top: 7vh;
 
-	display: flex;
+    display: flex;
     flex-direction: column;
-    
-	justify-content: center;
-	align-items: center;
+
+    justify-content: center;
+    align-items: center;
 }
 
 /* Text on home page */
 .countup__item {
-	display: block;
-    margin-left:10px;
+    display: block;
+    margin-left: 10px;
     margin-right: 10px;
 }
 
 .countup__tls {
-	font-size: 100px;
-	line-height: 150px;
+    font-size: min(25vw, 100px);
+    /*font-size: max(30vw, 2.1em, 100px);*/
 }
 
 /*
@@ -64,14 +75,15 @@ body {
 .main_incidents {
     margin-top: 7vh;
     text-align: center;
-    margin-left:max(7%, 50px);
-    margin-right:max(7%, 50px);
+    margin-left: max(7%, 50px);
+    margin-right: max(7%, 50px);
 }
 
 .recent_incidents_text {
     margin-bottom: 10px;
     font-size: 30px;
     text-decoration: underline;
+    font-weight: bold;
 }
 
 .incidents_container {
@@ -82,6 +94,7 @@ body {
 }
 
 .incident {
+    font-family: Departure Mono, monospcae;
     margin: 5px;
     padding: 7px;
     background-color: #454545; /* no clue, original bad idea */
@@ -91,12 +104,12 @@ body {
     border: #5f5f5f solid 2px; /* dark gray */
     border-radius: 10px;
     min-width: 23%;
-    flex-grow:0;
-    flex-shrink:1;
+    flex-grow: 0;
+    flex-shrink: 1;
 }
 
 .incident h1 {
-    font-size:25px;
+    font-size: 25px;
     padding-bottom: 15px;
 }
 
@@ -109,5 +122,5 @@ body {
 }
 
 .incident_time {
-    font-size:medium;
+    font-size: medium;
 }
